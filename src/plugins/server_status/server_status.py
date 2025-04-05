@@ -13,9 +13,12 @@ from nonebot.rule import to_me
 
 from src.plugins.server_status.utils import call_bt_status_api, get_status
 
-status = on_command("状态", aliases={"status"}, rule=to_me())
+status = on_command("状态", aliases={"status"})
 
 @status.handle()
 async def _(event: MessageEvent, bot: V11Bot):
     data =get_status()
-    await status.finish(f"{json.dumps(data)}")
+    disk = ''
+    for key, i in data["disk"].items():
+        disk += f"\t{key}:{i}%\n"
+    await status.finish(f"cpu占用:{data["cpu"]}%\n内存占用:{data["memory"]}%\n虚拟内存:{data["swap"]}%\n磁盘占用:\n{disk}")
