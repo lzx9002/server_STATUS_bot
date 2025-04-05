@@ -1,22 +1,24 @@
-# -*- coding: utf-8 -*-
-# @Project : server_STATUS_bot
-# @File    : test.py
-# @IDE     : PyCharm
-# @Author  : lzx9002
-# @Time    : 2025/4/5 17:29
-import hashlib
-import time
+# 写死的配置信息（仅示例，实际需替换为有效值）
 
-import psutil
+API_KEY = "bu2DutNRkS5yFZTjlPni6sXFVh7LHkWh"  # 替换为真实密钥
+TARGET_IP = "159.138.156.179"  # 替换为目标IP地址
+
+# 使用示例（以requests库为例）
 import requests
 
-def call_bt_status_api():
-    api_sk="bu2DutNRkS5yFZTjlPni6sXFVh7LHkWh"
-    request_time=int(time.time())
-    def md5(s:str):
-        return hashlib.md5(s.encode('utf-8')).hexdigest()
-    request_token = md5(str(request_time)+''+md5(api_sk))
-    x = requests.post("http://159.138.156.179:8888/system?action=GetSystemTotal",json={"request_time": request_time, " request_token": request_token})
-    res = x.text
-    return res
-print(call_bt_status_api())
+
+def call_api():
+    url = f"http://{TARGET_IP}/api/endpoint"
+    headers = {"Authorization": f"Bearer {API_KEY}"}
+
+    try:
+        response = requests.get(url, headers=headers)
+        return response.text
+    except Exception as e:
+        print(f"请求失败: {str(e)}")
+        return None
+
+
+# 调用示例
+result = call_api()
+print(result)
