@@ -38,9 +38,13 @@ def format_system(data):
     """格式化系统信息"""
     output = []
     output.append("=== 系统概览 ===")
-    output.append(f"系统名称: {data['title']} | 运行时间: {data['time']}")
-    output.append(f"系统版本: {data['system']} | 宝塔版本: {data['version']}")
-    output.append(f"网站数量: {data['site_total']} | FTP账户: {data['ftp_total']} | 数据库: {data['database_total']}")
+    output.append(f"|系统名称: {data['title']} "
+                  f"| 运行时间: {data['time']}")
+    output.append(f"|系统版本: {data['system']} "
+                  f"| 宝塔版本: {data['version']}")
+    output.append(f"|网站数量: {data['site_total']} "
+                  f"| FTP账户: {data['ftp_total']} "
+                  f"| 数据库: {data['database_total']}")
     output.append("-" * 50)
     return "\n".join(output)
 
@@ -53,10 +57,13 @@ def format_cpu(data):
     # 解析CPU信息（根据原始数据结构适配）
     cpu_info = data["cpu"]
     core_info = cpu_info[2]
-    output.append(f"处理器型号: {cpu_info[3]}")
-    output.append(f"逻辑核心数: {cpu_info[4]} | 线程数: {cpu_info[5]}")
-    output.append(f"当前负载: 用户进程 {data['cpu_times']['user']:.1f} | 系统进程 {data['cpu_times']['system']:.1f}")
-    output.append(f"空闲率: {data['cpu_times']['idle']:.1f}% | 总进程数: {data['cpu_times']['总进程数']}")
+    output.append(f"| 处理器型号: {cpu_info[3]}")
+    output.append(f"| 逻辑核心数: {cpu_info[4]} "
+                  f"| 线程数: {cpu_info[5]}")
+    output.append(f"| 当前负载: 用户进程 {data['cpu_times']['user']:.1f} "
+                  f"| 系统进程 {data['cpu_times']['system']:.1f}")
+    output.append(f"| 空闲率: {data['cpu_times']['idle']:.1f}% "
+                  f"| 总进程数: {data['cpu_times']['总进程数']}")
     output.append("-" * 50)
     return "\n".join(output)
 
@@ -70,9 +77,11 @@ def format_memory(data):
     mem_used = format_size(data["mem"]["memRealUsed"] * 1024 ** 2)
     mem_free = format_size(data["mem"]["memFree"] * 1024 ** 2)
 
-    output.append(f"总内存: {mem_total} | 已用内存: {mem_used} | 空闲内存: {mem_free}")
-    output.append(f"缓存内存: {format_size(data['mem']['memCached'] * 1024 ** 2)}")
-    output.append(f"可用内存: {format_size(data['mem']['memAvailable'] * 1024 ** 2)}")
+    output.append(f"| 总内存: {mem_total} "
+                  f"| 已用内存: {mem_used} "
+                  f"| 空闲内存: {mem_free}")
+    output.append(f"| 缓存内存: {format_size(data['mem']['memCached'] * 1024 ** 2)}")
+    output.append(f"| 可用内存: {format_size(data['mem']['memAvailable'] * 1024 ** 2)}")
     output.append("-" * 50)
     return "\n".join(output)
 
@@ -87,9 +96,12 @@ def format_disk(data):
         used = format_size(disk["byte_size"][0] - disk["byte_size"][2])
         percent = disk["size"][3]
 
-        output.append(f"挂载点: {disk['path']} | 文件系统: {disk['filesystem']}")
-        output.append(f"总空间: {total} | 已用空间: {used} | 使用率: {percent}")
-        output.append(f"inode使用率: {disk['inodes'][3]}")
+        output.append(f"| 挂载点: {disk['path']} "
+                      f"| 文件系统: {disk['filesystem']}")
+        output.append(f"| 总空间: {total} "
+                      f"| 已用空间: {used} "
+                      f"| 使用率: {percent}")
+        output.append(f"| inode使用率: {disk['inodes'][3]}")
         output.append("-" * 50)
 
     return "\n".join(output)
@@ -107,8 +119,10 @@ def main(data):
     # 添加负载信息
     report.append("=== 系统负载 ===")
     report.append(
-        f"1分钟负载: {data['load']['one']:.2f} | 5分钟负载: {data['load']['five']:.2f} | 15分钟负载: {data['load']['fifteen']:.2f}")
-    report.append(f"负载阈值: {data['load']['safe']}/{data['load']['max']}")
+        f"| 1分钟负载: {data['load']['one']:.2f} "
+        f"| 5分钟负载: {data['load']['five']:.2f} "
+        f"| 15分钟负载: {data['load']['fifteen']:.2f}")
+    report.append(f"| 负载阈值: {data['load']['safe']}/{data['load']['max']}")
 
     return "\n".join(report)
 
